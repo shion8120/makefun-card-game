@@ -1,0 +1,162 @@
+/* The title screen (logo, how-to, a showcase fan of one card per element, Start) and the result
+   screen laid over the final table (portrait, VICTORY or DEFEAT, duel stats, Play Again). */
+
+.screen {
+  z-index: 30;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+.screen[hidden] { display: none; }
+
+.title-screen {
+  background:
+    radial-gradient(ellipse 55% 45% at 50% 40%, rgba(255, 106, 43, 0.35), transparent 70%),
+    radial-gradient(ellipse 100% 80% at 50% 60%, #2a1714, #0b0708 80%);
+  box-shadow: inset 0 0 0 10px #2c1d16, inset 0 0 0 13px #6b4a2c;
+  gap: 14px;
+}
+
+.title-glow {
+  position: absolute;
+  left: 50%;
+  top: 130px;
+  width: 520px;
+  height: 160px;
+  margin-left: -260px;
+  background: radial-gradient(ellipse, rgba(255, 150, 60, 0.35), transparent 70%);
+  filter: blur(10px);
+  animation: glow-breathe 3s ease-in-out infinite;
+}
+@keyframes glow-breathe { 50% { opacity: 0.55; transform: scale(1.08); } }
+
+.logo {
+  position: relative;
+  margin: 0;
+  line-height: 0.9;
+  font-weight: 900;
+  font-style: italic;
+  letter-spacing: 0.06em;
+}
+.logo span { display: block; }
+.logo-ember {
+  font-size: 118px;
+  background: linear-gradient(#fff3c4 10%, #ffb02e 45%, #ff4a1a 80%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  filter: drop-shadow(0 4px 0 #5a1800) drop-shadow(0 0 24px rgba(255, 106, 43, 0.6));
+}
+.logo-duel {
+  font-size: 58px;
+  letter-spacing: 0.5em;
+  margin-right: -0.5em;
+  color: #f6e7c8;
+  text-shadow: 0 3px 0 #000;
+}
+
+.howto {
+  position: relative;
+  margin: 4px 0 0;
+  font-size: 19px;
+  color: #ffe9c4;
+  max-width: 960px;
+}
+.howto b { color: #ffcf7a; }
+
+.title-cards {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  height: 230px;
+  align-items: center;
+  margin: 2px 0 6px;
+}
+.title-cards .card { font-size: 17px; margin: 0 10px; animation: title-float 4s ease-in-out infinite; animation-delay: calc(var(--i) * -1s); }
+.title-cards .card:nth-child(1) { rotate: -12deg; translate: 0 18px; }
+.title-cards .card:nth-child(2) { rotate: -4deg; }
+.title-cards .card:nth-child(3) { rotate: 4deg; }
+.title-cards .card:nth-child(4) { rotate: 12deg; translate: 0 18px; }
+@keyframes title-float { 50% { transform: translateY(-8px); } }
+
+.keys { margin: 0; font-size: 13px; color: #b9a98d; letter-spacing: 0.08em; }
+
+.result-screen {
+  background: radial-gradient(ellipse 60% 70% at 50% 50%, rgba(10, 6, 6, 0.82), rgba(10, 6, 6, 0.55));
+  gap: 10px;
+}
+.result-screen.won { background: radial-gradient(ellipse 60% 70% at 50% 50%, rgba(60, 22, 6, 0.86), rgba(10, 6, 6, 0.5)); }
+.result-screen::before {
+  /* A sunburst of ember rays behind the title (a cold, still ring on defeat). */
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 46%;
+  width: 900px;
+  height: 900px;
+  margin: -450px 0 0 -450px;
+  border-radius: 50%;
+  background: repeating-conic-gradient(from 0deg, rgba(255, 176, 46, 0.16) 0deg 6deg, transparent 6deg 18deg);
+  -webkit-mask: radial-gradient(circle, #000 18%, transparent 62%);
+  mask: radial-gradient(circle, #000 18%, transparent 62%);
+  animation: rays-turn 30s linear infinite;
+  pointer-events: none;
+}
+.result-screen.lost::before { background: repeating-conic-gradient(from 0deg, rgba(140, 160, 210, 0.08) 0deg 4deg, transparent 4deg 22deg); }
+@keyframes rays-turn { to { transform: rotate(360deg); } }
+.result-screen > * { position: relative; }
+.result-sparks { position: absolute; inset: 0; pointer-events: none; }
+.result-sparks i {
+  position: absolute;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #ffcf5a;
+  box-shadow: 0 0 10px 3px rgba(255, 140, 40, 0.8);
+  animation: spark-rise 3.2s ease-in infinite;
+}
+.lost .result-sparks i { background: #7a7484; box-shadow: none; animation-name: ash-fall; }
+@keyframes spark-rise { from { transform: translateY(40px); opacity: 0; } 20% { opacity: 1; } to { transform: translateY(-160px); opacity: 0; } }
+@keyframes ash-fall { from { transform: translateY(-40px); opacity: 0; } 20% { opacity: 0.8; } to { transform: translateY(160px); opacity: 0; } }
+
+.portrait.big { width: 140px; height: 140px; }
+
+.result-title {
+  margin: 0;
+  font-size: 104px;
+  font-weight: 900;
+  font-style: italic;
+  letter-spacing: 0.08em;
+  line-height: 1;
+}
+.won .result-title {
+  background: linear-gradient(#fff6cf 10%, #ffc23a 50%, #ff5a1a 90%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  filter: drop-shadow(0 4px 0 #5a1800) drop-shadow(0 0 30px rgba(255, 160, 60, 0.8));
+}
+.lost .result-title { color: #8fa3c4; text-shadow: 0 4px 0 #000, 0 0 30px rgba(90, 120, 200, 0.5); }
+.result-screen.enter .result-title { animation: title-slam 0.7s cubic-bezier(0.2, 1.4, 0.4, 1) backwards; }
+@keyframes title-slam {
+  from { opacity: 0; transform: scale(2.4) rotate(-6deg); }
+}
+
+.result-subtitle { margin: 0; font-size: 20px; color: #ffe9c4; }
+
+.result-stats {
+  display: grid;
+  grid-template-columns: repeat(4, 130px);
+  gap: 10px;
+  margin: 8px 0 14px;
+}
+.result-stats div {
+  padding: 10px 6px;
+  border-radius: 12px;
+  background: rgba(0, 0, 0, 0.5);
+  border: 1px solid #6b4a2c;
+}
+.result-stats dt { font-size: 11px; letter-spacing: 0.16em; color: #b9a98d; text-transform: uppercase; }
+.result-stats dd { margin: 4px 0 0; font-size: 28px; font-weight: 900; color: #ffd27a; }

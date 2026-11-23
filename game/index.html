@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>EMBER DUEL</title>
+<link rel="stylesheet" href="./styles/table.css">
+<link rel="stylesheet" href="./styles/cards.css">
+<link rel="stylesheet" href="./styles/screens.css">
+</head>
+<body>
+<main id="table" class="table" aria-label="Duel table">
+  <section id="foe-zone" class="zone foe-zone">
+    <div class="duelist foe-duelist">
+      <canvas id="foe-portrait" class="portrait" width="104" height="104" aria-label="Vesk, the Ash Warden"></canvas>
+      <div class="duelist-info">
+        <h2 id="foe-name" class="duelist-name">Vesk, the Ash Warden</h2>
+        <ol id="foe-strategy" class="strategy" aria-label="How Vesk plays"></ol>
+      </div>
+    </div>
+    <div id="foe-hand" class="hand foe-hand" aria-label="Vesk's hand"></div>
+    <div class="pile-info foe-pile">
+      <div id="foe-energy" class="energy-bar" aria-label="Vesk's energy"></div>
+      <div id="foe-deck" class="deck-count"></div>
+    </div>
+  </section>
+
+  <section id="arena" class="arena">
+    <div id="scoreboard" class="scoreboard" aria-label="Life totals">
+      <div class="score-row foe-score"><span class="score-label">VESK</span><span id="foe-life" class="life-value">20</span><div class="life-bar"><i id="foe-life-bar"></i></div></div>
+      <div id="round-label" class="round-label">ROUND 1</div>
+      <div class="score-row player-score"><span class="score-label">YOU</span><span id="player-life" class="life-value">20</span><div class="life-bar"><i id="player-life-bar"></i></div></div>
+    </div>
+    <div class="stances">
+      <div class="stance-slot" id="foe-stance-slot"><div class="slot-label">Vesk's guard</div><div id="foe-stance" class="slot-card"></div></div>
+      <div class="versus">VS</div>
+      <div class="stance-slot" id="player-stance-slot"><div class="slot-label">Your guard</div><div id="player-stance" class="slot-card"></div></div>
+    </div>
+    <aside class="rules-card" aria-label="Rules reminder">
+      <div id="mini-wheel" class="mini-wheel"></div>
+      <ul class="rule-list">
+        <li><b>Pierce</b> halves a guard the arrow points at</li>
+        <li><b>Kindred</b> same element twice: +2 attack</li>
+        <li><b>Barb</b> hurts whoever attacks into it</li>
+      </ul>
+    </aside>
+    <div id="message-line" class="message-line" role="status" aria-live="polite"></div>
+  </section>
+
+  <section id="player-zone" class="zone player-zone">
+    <div class="duelist player-duelist">
+      <canvas id="player-crest" class="portrait crest" width="84" height="84" aria-hidden="true"></canvas>
+      <div class="duelist-info">
+        <h2 class="duelist-name">You</h2>
+        <div id="player-energy" class="energy-bar" aria-label="Your energy"></div>
+        <div id="player-energy-label" class="energy-label"></div>
+      </div>
+    </div>
+    <div id="player-hand" class="hand player-hand" aria-label="Your hand"></div>
+    <div class="pile-info player-pile">
+      <button id="rest-button" class="button ghost" type="button" title="Skip your play, keep your guard, bank +1 energy (R)">Rest <small>+1 energy</small></button>
+      <div id="player-deck" class="deck-count"></div>
+    </div>
+  </section>
+</main>
+
+<section id="screen-title" class="screen title-screen" aria-label="Title">
+  <div class="title-glow"></div>
+  <h1 class="logo"><span class="logo-ember">EMBER</span><span class="logo-duel">DUEL</span></h1>
+  <p class="howto">Play one card a turn: its <b>attack</b> strikes past your rival's <b>guard</b>. Bring Vesk from 20 life to 0.</p>
+  <div id="title-cards" class="title-cards"></div>
+  <button id="start-button" class="button primary" type="button">Start Duel</button>
+  <p class="keys">Click a card or press 1-7 · R rests · Enter starts</p>
+</section>
+
+<section id="screen-result" class="screen result-screen" aria-label="Result" hidden>
+  <div id="result-sparks" class="result-sparks" aria-hidden="true"></div>
+  <canvas id="result-portrait" class="portrait big" width="140" height="140" aria-hidden="true"></canvas>
+  <h1 id="result-title" class="result-title">VICTORY</h1>
+  <p id="result-subtitle" class="result-subtitle"></p>
+  <dl id="result-stats" class="result-stats"></dl>
+  <button id="again-button" class="button primary" type="button">Play Again</button>
+</section>
+
+<canvas id="fx-canvas" class="fx-canvas" aria-hidden="true"></canvas>
+<script type="module" src="./src/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,237 @@
+/* Cards: everything sized in em so one font-size scales a card (hand 128x180, rival backs,
+   title showcase). Each element tints the frame with its own colour; its sigil shape repeats in
+   the corner pip so suits read apart by shape as well as colour. */
+
+.card {
+  --el: #888;
+  --el-deep: #222;
+  --el-glow: #ddd;
+  position: relative;
+  width: 8em;
+  height: 11.25em;
+  font-size: 16px;
+  flex: none;
+  border-radius: 0.8em;
+  transform-style: preserve-3d;
+  transition: transform 0.18s cubic-bezier(0.2, 0.9, 0.3, 1.2), filter 0.18s ease, box-shadow 0.18s ease;
+  user-select: none;
+}
+
+.el-ember { --el: #ff6a2b; --el-deep: #7a1d08; --el-glow: #ffc25a; }
+.el-tide { --el: #2f9bff; --el-deep: #0b2f66; --el-glow: #9fe3ff; }
+.el-thorn { --el: #3fc46a; --el-deep: #0f4a24; --el-glow: #b8f59a; }
+.el-gale { --el: #b9a2ff; --el-deep: #3b2b78; --el-glow: #f3ecff; }
+
+.card-inner {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  overflow: hidden;
+  backface-visibility: hidden;
+  box-shadow: 0 0.35em 0.9em rgba(0, 0, 0, 0.6);
+}
+
+.card.face .card-inner {
+  background:
+    linear-gradient(to bottom, transparent 62%, rgba(0, 0, 0, 0.5)),
+    radial-gradient(circle at 50% 38%, var(--el-glow) 0%, var(--el) 28%, var(--el-deep) 72%);
+  border: 0.22em solid #f3d9a8;
+  box-sizing: border-box;
+  box-shadow: inset 0 0 0 0.14em var(--el-deep), 0 0.35em 0.9em rgba(0, 0, 0, 0.6);
+}
+
+.card-cost {
+  position: absolute;
+  left: 0.15em;
+  top: 0.1em;
+  width: 2.15em;
+  height: 2.15em;
+  display: grid;
+  place-items: center;
+}
+.card-cost svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+.card-cost span {
+  position: relative;
+  font-size: 1.15em;
+  font-weight: 900;
+  color: #3a1600;
+  margin-top: 0.1em;
+}
+
+.card-pip {
+  position: absolute;
+  right: 0.35em;
+  top: 0.35em;
+  width: 1.25em;
+  height: 1.25em;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.45);
+  display: grid;
+  place-items: center;
+}
+.card-pip svg { width: 0.95em; height: 0.95em; }
+
+.card-art {
+  position: absolute;
+  left: 50%;
+  top: 1.6em;
+  width: 4.2em;
+  height: 4.2em;
+  margin-left: -2.1em;
+  filter: drop-shadow(0 0.2em 0.3em rgba(0, 0, 0, 0.55));
+}
+.card-art svg { width: 100%; height: 100%; }
+
+.card-name {
+  position: absolute;
+  left: 0.3em;
+  right: 0.3em;
+  top: calc(6.1em / 0.8);
+  padding: 0.2em 0;
+  text-align: center;
+  font-size: 0.8em;
+  font-weight: bold;
+  letter-spacing: 0.02em;
+  color: #2b1608;
+  background: linear-gradient(#f8e7c4, #e2c48e);
+  border-radius: 0.3em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.card-effect {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: calc(7.75em / 0.72);
+  text-align: center;
+  font-size: 0.72em;
+  font-weight: bold;
+  color: #fff6dc;
+  text-shadow: 0 1px 2px #000;
+}
+.card-effect.empty { color: rgba(255, 246, 220, 0.55); font-weight: normal; letter-spacing: 0.2em; text-transform: uppercase; }
+
+.card-stats {
+  position: absolute;
+  left: 0.3em;
+  right: 0.3em;
+  bottom: 0.3em;
+  display: flex;
+  justify-content: space-between;
+}
+
+.stat {
+  display: flex;
+  align-items: center;
+  gap: 0.12em;
+  padding: 0.05em 0.35em 0.05em 0.25em;
+  border-radius: 0.5em;
+  font-size: 1em;
+}
+.stat svg { width: 1em; height: 1em; }
+.stat b { font-size: 1.45em; line-height: 1; font-weight: 900; text-shadow: 0 2px 0 #000; }
+.stat-attack { background: rgba(120, 20, 10, 0.85); color: #ffd6c2; }
+.stat-guard { background: rgba(14, 40, 90, 0.85); color: #d6e6ff; }
+
+/* The back: an ember knot on dark crimson. */
+.card.back .card-inner {
+  border: 0.22em solid #c48a3a;
+  box-sizing: border-box;
+  background:
+    repeating-linear-gradient(45deg, rgba(255, 176, 46, 0.10) 0 0.3em, transparent 0.3em 0.9em),
+    repeating-linear-gradient(-45deg, rgba(255, 176, 46, 0.10) 0 0.3em, transparent 0.3em 0.9em),
+    radial-gradient(circle at 50% 50%, #8a2310, #3a0d0a 70%);
+}
+.back-knot {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 3.4em;
+  height: 3.4em;
+  margin: -1.7em 0 0 -1.7em;
+  border-radius: 50%;
+  border: 0.3em double #ffb02e;
+  box-shadow: 0 0 1em rgba(255, 140, 40, 0.6), inset 0 0 0.8em rgba(255, 106, 43, 0.6);
+}
+.back-knot::after {
+  content: "";
+  position: absolute;
+  inset: 0.7em;
+  transform: rotate(45deg);
+  border: 0.22em solid #ffd27a;
+}
+
+.foe-hand .card { font-size: 8.6px; }
+
+/* Player's hand: fanned, lifts on hover, dims what it cannot pay for. */
+.player-hand .card { cursor: pointer; transform: translateY(var(--fan-lift, 0px)) rotate(var(--fan-tilt, 0deg)); }
+.player-hand .card:hover, .player-hand .card.focus {
+  transform: translateY(-28px) scale(1.05);
+  z-index: 10;
+  filter: brightness(1.12);
+}
+.player-hand .card:hover .card-inner, .player-hand .card.focus .card-inner { box-shadow: 0 0 0 0.16em #ffe08a, 0 0 1.6em rgba(255, 200, 90, 0.75); }
+.player-hand .card.unaffordable { cursor: not-allowed; filter: grayscale(0.75) brightness(0.6); }
+.player-hand .card.unaffordable:hover { transform: translateY(calc(var(--fan-lift, 0px) - 6px)) rotate(var(--fan-tilt, 0deg)); filter: grayscale(0.6) brightness(0.75); }
+.player-hand.locked .card { cursor: default; }
+
+.card-key {
+  position: absolute;
+  left: 50%;
+  bottom: -1.45em;
+  transform: translateX(-50%);
+  font-size: 0.75em;
+  color: var(--ink-dim);
+}
+
+/* The preview badge: what this card would do if played right now. */
+.card-preview {
+  position: absolute;
+  left: 50%;
+  top: -0.95em;
+  transform: translateX(-50%);
+  padding: 0.12em 0.55em;
+  border-radius: 1em;
+  font-size: 0.8em;
+  font-weight: 900;
+  white-space: nowrap;
+  color: #2a1206;
+  background: linear-gradient(#ffe08a, #ffad3a);
+  box-shadow: 0 0.15em 0.4em rgba(0, 0, 0, 0.6);
+  z-index: 2;
+}
+.card-preview.weak { background: linear-gradient(#d8cbb4, #9a8b74); }
+.card-preview.lethal { background: linear-gradient(#fff, #ff6a4a); animation: lethal-pulse 0.9s ease-in-out infinite; }
+@keyframes lethal-pulse { 50% { box-shadow: 0 0 1em #ff6a4a; } }
+
+/* Deal: each new card slides up from the deck, staggered. */
+.card.deal { animation: deal-in 0.55s cubic-bezier(0.2, 0.9, 0.3, 1.25) backwards; animation-delay: calc(var(--i, 0) * 80ms); }
+@keyframes deal-in {
+  from { opacity: 0; transform: translate(260px, 60px) rotate(25deg) scale(0.7); }
+}
+.foe-hand .card.deal { animation-name: deal-in-foe; }
+@keyframes deal-in-foe {
+  from { opacity: 0; transform: translate(200px, -40px) rotate(-25deg); }
+}
+
+/* A guard that just took a hit. */
+.slot-card .card.struck { animation: struck 0.45s ease-out; }
+@keyframes struck {
+  30% { transform: scale(0.92) rotate(-3deg); filter: brightness(2); }
+}
+.slot-card .card.pierced-mark::after {
+  content: "PIERCED";
+  position: absolute;
+  left: 50%;
+  top: 44%;
+  transform: translate(-50%, -50%) rotate(-12deg);
+  font-size: 0.95em;
+  font-weight: 900;
+  color: #fff;
+  background: #c0261a;
+  padding: 0.1em 0.5em;
+  border-radius: 0.3em;
+  letter-spacing: 0.1em;
+}
